@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USD ⇄ IQD Converter</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:12px;
+max-width:400px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:8px;
+border:none;
+font-size:18px;
+}
+
+.result{
+background:#020617;
+padding:15px;
+border-radius:8px;
+font-size:20px;
+text-align:center;
+margin-top:10px;
+}
+
+h2{
+text-align:center;
+}
+
+label{
+color:#94a3b8;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>USD ⇄ IQD</h2>
+
+<label>Price of 100$ (IQD)</label>
+<input id="rate" type="number">
+
+<label>USD Amount</label>
+<input id="usd" type="number">
+
+<div class="result" id="iqd">
+0 IQD
+</div>
+
+<label>IQD Amount</label>
+<input id="iqdInput" type="number">
+
+<div class="result" id="usdResult">
+0 USD
+</div>
+
+</div>
+
+<script>
+
+let rate=document.getElementById("rate");
+let usd=document.getElementById("usd");
+let iqd=document.getElementById("iqd");
+let iqdInput=document.getElementById("iqdInput");
+let usdResult=document.getElementById("usdResult");
+
+rate.value=localStorage.getItem("rate") || 155000;
+
+function convert(){
+
+let price1=rate.value/100;
+
+iqd.innerHTML=
+(usd.value*price1 || 0).toLocaleString()
++" IQD";
+
+usdResult.innerHTML=
+(iqdInput.value/price1 || 0).toFixed(2)
++" USD";
+
+localStorage.setItem("rate",rate.value);
+
+}
+
+rate.oninput=convert;
+usd.oninput=convert;
+iqdInput.oninput=convert;
+
+convert();
+
+</script>
+
+</body>
+</html>
