@@ -19,218 +19,101 @@ padding:0;
 }
 
 body{
-
 font-family:system-ui,-apple-system,Segoe UI,Roboto;
-
-background:
-radial-gradient(circle at 20% 20%,#1e293b,#020617);
-
+background:radial-gradient(circle at 20% 20%,#1e293b,#020617);
 color:white;
-
 min-height:100vh;
-
 display:flex;
-
 align-items:center;
-
 justify-content:center;
-
 padding:15px;
-
 }
 
 .card{
-
 width:100%;
-
 max-width:440px;
-
 background:rgba(15,23,42,.75);
-
 backdrop-filter:blur(15px);
-
 border-radius:20px;
-
 padding:25px;
-
-box-shadow:
-0 15px 40px rgba(0,0,0,.5),
-inset 0 1px 0 rgba(255,255,255,.05);
-
+box-shadow:0 15px 40px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
 border:1px solid rgba(255,255,255,.05);
-
 }
 
 .header{
-
 text-align:center;
-
 margin-bottom:20px;
-
 }
 
 .header h2{
-
 font-weight:600;
-
 margin-bottom:5px;
-
 }
 
 .sub{
-
 color:#94a3b8;
-
 font-size:13px;
-
 }
 
 label{
-
 color:#94a3b8;
-
 font-size:13px;
-
 margin-bottom:6px;
-
 display:block;
-
 }
 
 input{
-
 width:100%;
-
 padding:14px;
-
 border-radius:12px;
-
 border:1px solid #1e293b;
-
 background:#020617;
-
 color:white;
-
 font-size:18px;
-
 outline:none;
-
 transition:.25s;
-
 }
 
 input:focus{
-
 border:1px solid #38bdf8;
-
 box-shadow:0 0 0 3px rgba(56,189,248,.15);
-
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:1fr auto 1fr;
-
-gap:10px;
-
-align-items:center;
-
-margin-top:10px;
-
-}
-
-.swap{
-
-width:55px;
-
-height:55px;
-
-border-radius:14px;
-
-border:none;
-
-background:#0ea5e9;
-
-color:white;
-
-font-size:22px;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-.swap:hover{
-
-background:#38bdf8;
-
-transform:scale(1.05);
-
 }
 
 .result{
-
 background:#020617;
-
 border-radius:14px;
-
 padding:16px;
-
 text-align:center;
-
 margin-top:15px;
-
 font-size:22px;
-
 font-weight:600;
-
 border:1px solid #1e293b;
-
 }
 
 .rateBox{
-
 background:#020617;
-
 padding:15px;
-
 border-radius:14px;
-
 margin-bottom:15px;
-
 border:1px solid #1e293b;
-
 }
 
 .footer{
-
 text-align:center;
-
 margin-top:15px;
-
 font-size:12px;
-
 color:#64748b;
-
 }
 
 @media(max-width:420px){
-
-.grid{
-
-grid-template-columns:1fr;
-
+input{
+font-size:16px;
+padding:12px;
 }
-
-.swap{
-
-width:100%;
-
+.result{
+font-size:18px;
+padding:14px;
 }
-
 }
 
 </style>
@@ -242,59 +125,25 @@ width:100%;
 <div class="card">
 
 <div class="header">
-
 <h2>💱 USD ⇄ IQD</h2>
-
-<div class="sub">
-Live manual exchange tool
-</div>
-
+<div class="sub">Live manual exchange tool</div>
 </div>
 
 <div class="rateBox">
-
 <label>Price of 100$ (IQD)</label>
-
 <input id="rate" type="number">
-
 </div>
 
-<div class="grid">
-
-<div>
-
-<label>USD</label>
-
+<label>USD Amount</label>
 <input id="usd" type="number">
 
-</div>
-
-<button class="swap"
-onclick="swap()">
-⇄
-</button>
-
-<div>
-
-<label>IQD</label>
-
+<label>IQD Amount</label>
 <input id="iqd">
 
-</div>
-
-</div>
-
-<div class="result"
-id="info">
-
-0 IQD
-
-</div>
+<div class="result" id="info">0 IQD</div>
 
 <div class="footer">
-
 Rate saved automatically
-
 </div>
 
 </div>
@@ -302,82 +151,35 @@ Rate saved automatically
 <script>
 
 let rate=document.getElementById("rate");
-
 let usd=document.getElementById("usd");
-
 let iqd=document.getElementById("iqd");
-
 let info=document.getElementById("info");
 
-rate.value=
-localStorage.getItem("rate")
-|| 155000;
+rate.value = localStorage.getItem("rate") || 155000;
 
 function convertFromUSD(){
-
-let price=rate.value/100;
-
-let result=usd.value*price;
-
-iqd.value=
-result ? result.toLocaleString() : "";
-
-info.innerHTML=
-result ?
-result.toLocaleString()+" IQD"
-:
-"0 IQD";
-
-localStorage.setItem(
-"rate",
-rate.value
-);
-
+let price = rate.value/100;
+let result = usd.value*price;
+iqd.value = result ? result.toLocaleString() : "";
+info.innerHTML = result ? result.toLocaleString()+" IQD" : "0 IQD";
+localStorage.setItem("rate", rate.value);
 }
 
 function convertFromIQD(){
-
-let price=rate.value/100;
-
-let result=
-iqd.value.replace(/,/g,'')/price;
-
-usd.value=
-result ? result.toFixed(2) : "";
-
-info.innerHTML=
-usd.value ?
-usd.value+" USD"
-:
-"0 USD";
-
-localStorage.setItem(
-"rate",
-rate.value
-);
-
+let price = rate.value/100;
+let result = iqd.value.replace(/,/g,'')/price;
+usd.value = result ? result.toFixed(2) : "";
+info.innerHTML = usd.value ? usd.value+" USD" : "0 USD";
+localStorage.setItem("rate", rate.value);
 }
 
-function swap(){
-
-let temp=usd.value;
-
-usd.value=iqd.value;
-
-iqd.value=temp;
-
-}
-
-usd.oninput=convertFromUSD;
-
-iqd.oninput=convertFromIQD;
-
-rate.oninput=convertFromUSD;
+usd.oninput = convertFromUSD;
+iqd.oninput = convertFromIQD;
+rate.oninput = convertFromUSD;
 
 convertFromUSD();
 
 </script>
 
 </body>
-
 </html>
